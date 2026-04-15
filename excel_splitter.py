@@ -135,9 +135,10 @@ def format_row_preview(ws, row_idx, max_col):
 def safe_filename(name):
     if not name:
         return "未分类"
-    for ch in '/\0':
+    # 同时过滤 Windows 和 Linux 的非法字符
+    for ch in '\\/:*?"<>|\0':
         name = name.replace(ch, '_')
-    name = name.strip()
+    name = name.strip().rstrip('.')
     if not name:
         return "未分类"
     if len(name) > 200:
